@@ -30,28 +30,33 @@ p1 = Staff("vijay", "1234")
 print(p1)
 
 
+def register():
+    username = input("Username: ")
+    password = input("Password: ")
+
+    print(username)
+    print(password)
+
+def login():
+    username = input("Username: ")
+    password = input("Password: ")
+    print(username)
+    print(password)
 
 def initial():
-
-    menu = {
-        "1": "--- Register ---",
-        "2": "--- Login ---",
-        "3": "--- Exit ---"
-    }
-
     print("\n\n===== QuickMart =====")
     choice = input("1.Register  2.Login  3.Exit \n Enter choice: ")
 
     if(choice == "1"):
-        print(menu["1"])
+        print("\n--- Register ---")
+        register()
     elif(choice == "2"):
-        print(menu["2"])
+        print("\n--- Login ---")
+        login()
     elif(choice == "3"):
-        print(menu["3"])
+        print("\n--- Exit ---")
     else:
         print("\n\nYou have Entered Wrong input TRY AGAIN")
         initial()
-
-
 
 initial()
