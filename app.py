@@ -34,19 +34,24 @@ print(p1)
 def initial():
 
     menu = {
-        "1": "Register",
-        "2": "Login",
-        "3": "Exit"
+        "1": "--- Register ---",
+        "2": "--- Login ---",
+        "3": "--- Exit ---"
     }
 
     print("\n\n===== QuickMart =====")
     choice = input("1.Register  2.Login  3.Exit \n Enter choice: ")
 
-    if(menu[choice]):
-        print("has")
-        print(menu[choice])
+    if(choice == "1"):
+        print(menu["1"])
+    elif(choice == "2"):
+        print(menu["2"])
+    elif(choice == "3"):
+        print(menu["3"])
     else:
-        print("failed")
+        print("\n\nYou have Entered Wrong input TRY AGAIN")
+        initial()
+
 
 
 initial()
