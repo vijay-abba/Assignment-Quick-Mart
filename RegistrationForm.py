@@ -80,5 +80,5 @@ class RegistrationForm:
             print("\nuser already Exist")
             return False
 
-r1 = RegistrationForm("Prajapathi", "1Vijaykrishna")
-print(r1.flow())
+# r1 = RegistrationForm("Prajapathi", "1Vijaykrishna")
+# print(r1.flow())
