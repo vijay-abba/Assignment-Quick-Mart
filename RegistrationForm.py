@@ -58,13 +58,11 @@ class RegistrationForm:
         return file_name.is_file()
 
     def flow(self):
-
         if not self.validate_username():
             print(
                 "The username must be 4–20 characters long and should not contain spaces."
             )
             return False
-
         if not self.validate_password():
             print(
                 "Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit."
@@ -79,6 +77,7 @@ class RegistrationForm:
         else:
             print("\nuser already Exist")
             return False
+
 
 # r1 = RegistrationForm("Prajapathi", "1Vijaykrishna")
 # print(r1.flow())

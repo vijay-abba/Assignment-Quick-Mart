@@ -27,10 +27,12 @@ class Menu:
         username = input("Username: ")
         password = input("Password: ")
         print("\n")
-        return {username, password}
+        return {"username": username, "password": password}
 
     def register_login(self, fn):
-        username, password = self.register_data()
+        data = self.register_data()
+        username = data["username"]
+        password = data["password"]
 
         f1 = fn(username, password)
         result = f1.flow()

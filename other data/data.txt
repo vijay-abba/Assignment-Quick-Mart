@@ -1,8 +1,14 @@
-r1 = RegistrationForm("vijay", "abccefghI1")
+
 r1 = RegistrationForm("vijaykrishna", "1Vijaykrishna")
 r1 = RegistrationForm("vijaykrishna", "1Vijaykrishna")
 Username: vijay1      
 Password: Krishna123 
 
 Username: vijay2
+Password: Krishna123
+
+Username: vijay3
+Password: Krishna123
+
+Username: vijay4
 Password: Krishna123
