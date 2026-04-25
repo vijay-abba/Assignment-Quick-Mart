@@ -1,16 +1,15 @@
 import hashlib
 import os
-import hmac
 import json
+from pathlib import Path
+
 
 class RegistrationForm:
 
-    def __init__(self, username, password):
-
+    def __init__(self, username, password, role="staff"):
         self.username = username
         self.password = password
-        self.role = "staff"
-        self.flow()
+        self.role = role
 
     def validate_username(self):
         length_username = len(self.username)
@@ -18,9 +17,6 @@ class RegistrationForm:
         if length_username >= 4 and length_username <= 20 and spaces_count == 0:
             return True
         else:
-            print(
-                "The username must be 4–20 characters long and should not contain spaces."
-            )
             return False
 
     def validate_password(self):
@@ -31,9 +27,6 @@ class RegistrationForm:
         if length_password > 8 and upper_count >= 1 and digits_count >= 1:
             return True
         else:
-            print(
-                "Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit."
-            )
             return False
 
     def hash_password(self):
@@ -51,63 +44,41 @@ class RegistrationForm:
         return salt.hex() + ":" + dk.hex()
 
     def save_it(self, hash):
-        file_name = f"{self.username}.txt"
-        user_dict = {
-            "Username": self.username,
-            "Password": hash,
-            "Role": "staff"
-        }
+        file_path = Path("employees")
+        file_name = file_path / f"{self.username}.txt"
+        user_dict = {"Username": self.username, "Password": hash, "Role": "staff"}
         user_dict_json = json.dumps(user_dict)
 
         with open(file_name, "w") as f:
             f.write(user_dict_json)
 
-        print("Registration successful!")
+    def isUserExist(self):
+        file_path = Path("employees")
+        file_name = file_path / f"{self.username}.txt"
+        return file_name.is_file()
 
     def flow(self):
-        if(self.validate_username() and self.validate_password()):
+
+        if not self.validate_username():
+            print(
+                "The username must be 4–20 characters long and should not contain spaces."
+            )
+            return False
+
+        if not self.validate_password():
+            print(
+                "Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit."
+            )
+            return False
+
+        if not self.isUserExist():
             hash = self.hash_password()
             self.save_it(hash)
+            print("\nRegistration successful!")
+            return True
+        else:
+            print("\nuser already Exist")
+            return False
 
-
-r1 = RegistrationForm("vijaykrishna", "1Vijaykrishna")
-
-# r1 = RegistrationForm("vij", "a")
-# The username must be 4–20 characters long and should not contain spaces.
-
-# r1 = RegistrationForm("vi ja", "a")
-# The username must be 4–20 characters long and should not contain spaces.
-
-# r1 = RegistrationForm("vija", "a")
-# Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit.
-
-#r1 = RegistrationForm("vija", "abccefghi")
-# Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit.
-
-# r1 = RegistrationForm("vija", "abccefghI")
-# Password must contain at least 9 characters, including at least 1 uppercase letter and 1 digit.
-
-
-
-# ---- 
-
-
-def check_password_v2(stored_string, provided_password):
-    try:
-        salt_hex, hash_hex = stored_string.split(":")
-        salt = bytes.fromhex(salt_hex)
-        stored_hash = bytes.fromhex(hash_hex)
-
-        new_hash = hashlib.pbkdf2_hmac(
-            "sha256", provided_password.encode("utf-8"), salt, 100000
-        )
-
-        print(hmac.compare_digest(new_hash, stored_hash))
-    except Exception:
-        return False
-
-
-# check_password_v2(
-#     "82cdd17b89a0a85b650003d07591b253:5a11c81a8417b49fc0ddf32bdbac3bed9fd2aaa1928e04ba208c788273829d7a",
-#     "12345",
-# )
+r1 = RegistrationForm("Prajapathi", "1Vijaykrishna")
+print(r1.flow())

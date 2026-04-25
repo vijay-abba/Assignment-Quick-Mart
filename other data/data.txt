@@ -1,2 +1,3 @@
 r1 = RegistrationForm("vijay", "abccefghI1")
 r1 = RegistrationForm("vijaykrishna", "1Vijaykrishna")
+r1 = RegistrationForm("vijaykrishna", "1Vijaykrishna")
