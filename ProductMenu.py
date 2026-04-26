@@ -1,4 +1,5 @@
-from Product import Product, PerishableProduct
+
+from NewProduct import Product, PerishableProduct, ElectronicProduct, ClothingProduct
 
 
 class ProductMenu:
@@ -7,12 +8,12 @@ class ProductMenu:
 
     def __init__(self):
         print("\n===== Inventory =====")
-        action_choice = self.initizial(self.action_choice_fn)
-        product_choice = self.initizial(self.product_choice_fn)
+        action_choice = self.initizial(self.action_choice_validate_fn)
+        product_choice = self.initizial(self.product_choice_validate_fn)
 
         self.define_operstion(action_choice, product_choice)
 
-    def action_choice_fn(self):
+    def action_choice_validate_fn(self):
         action_list = ["1", "2", "3", "4", "5", "6"]
         action_choice = input(
             "\n1.Add  2.Update  3.Delete 4.Search  5.View All  6.Low Stock:\n"
@@ -23,7 +24,7 @@ class ProductMenu:
             print("\nInvalid choice, TRY AGAIN")
             return False
 
-    def product_choice_fn(self):
+    def product_choice_validate_fn(self):
         product_list = ["1", "2", "3", "4"]
         product_choice = input("\n1-General 2-Perishable 3-Electronic 4-Clothing:\n")
 
