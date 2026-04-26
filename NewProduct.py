@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import random
 
 file_path = Path("data")
 file_name = file_path / f"products.txt"
@@ -24,9 +25,23 @@ class Product:
             f.write(str_product_list)
         self.read_from_file()
 
+    def print_key_values(self, obj_a):
+        long_string = ""
+        for key, value in obj_a.items():
+
+            if key == "price":
+                long_string += f" ₹{value} |"
+            elif key == "quantity":
+                long_string += f" Qty:{value} |"
+            elif key == "type":
+                pass
+            else:
+                long_string += f" {value} |"
+        return long_string
+
     def add(self, name, quantity, price):
 
-        id = f"PRD-{len(self.product_list)+1:04d}"
+        id = f"PRD-{random.randint(0,9999):04d}"
         new_product_obj = {
             "id": id,
             "name": name,
@@ -37,6 +52,7 @@ class Product:
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"ADDED! ID {id}")
 
     def update(self, id, name, quantity, price):
 
@@ -50,6 +66,7 @@ class Product:
         self.delete(id)
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"UPDATED! ID {id}")
 
     def delete(self, id):
 
@@ -58,23 +75,37 @@ class Product:
         )
         self.writ_to_file()
 
+        print(f"DELETED! ID {id}")
+
     def search(self, name):
         filtered_list = list(
             filter(
                 lambda x: x["name"].lower().startswith(name.lower()), self.product_list
             )
         )
-        print(filtered_list)
+
+        # Found 1 result:
+        print(f"\n Found {len(filtered_list)} results: \n")
+
+        # list(map(lambda x: print(x), filtered_list))
+        # list(map(lambda item:  self.print_key_values(item)) , filtered_list)
+
+        for item in filtered_list:
+            print(self.print_key_values(item))
 
     def view_all(self):
-
+        print(f"\n Found {len(self.product_list)} results: \n")
         for i in self.product_list:
-            # print(f'{i["id"]} {i["name"]} {i["quantity"]}')
-            print(i)
+            print(self.print_key_values(i))
 
     def lowstock(self):
-        filtered_list = list(filter(lambda x: x["quantity"] < 5, self.product_list))
-        print(filtered_list)
+        
+        filtered_list = list(
+            filter(lambda x: int(x["quantity"]) < 5, self.product_list)
+        )
+        print(f"\n Found {len(filtered_list)} results: \n")
+        for item in filtered_list:
+            print(self.print_key_values(item))
 
 
 class PerishableProduct(Product):
@@ -83,7 +114,7 @@ class PerishableProduct(Product):
 
     def add(self, name, quantity, price, expiry_date):
 
-        id = f"PRD-{len(self.product_list)+1:04d}"
+        id = f"PPD-{random.randint(0,9999):04d}"
         new_product_obj = {
             "id": id,
             "name": name,
@@ -95,6 +126,7 @@ class PerishableProduct(Product):
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"ADDED! ID {id}")
 
     def update(self, id, name, quantity, price, expiry_date):
 
@@ -109,6 +141,7 @@ class PerishableProduct(Product):
         self.delete(id)
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"UPDATED! ID {id}")
 
 
 class ElectronicProduct(Product):
@@ -117,7 +150,7 @@ class ElectronicProduct(Product):
 
     def add(self, name, quantity, price, warranty):
 
-        id = f"PRD-{len(self.product_list)+1:04d}"
+        id = f"EPD-{random.randint(0,9999):04d}"
         new_product_obj = {
             "id": id,
             "name": name,
@@ -129,6 +162,7 @@ class ElectronicProduct(Product):
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"ADDED! ID {id}")
 
     def update(self, id, name, quantity, price, warranty):
 
@@ -144,6 +178,7 @@ class ElectronicProduct(Product):
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"UPDATED! ID {id}")
 
 
 class ClothingProduct(Product):
@@ -151,19 +186,20 @@ class ClothingProduct(Product):
         super().__init__()
 
     def add(self, name, quantity, price, size, material):
-        id = f"PRD-{len(self.product_list)+1:04d}"
+        id = f"CPD-{random.randint(0,9999):04d}"
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
             "price": price,
             "type": "4",
-            size: "size",
-            material: "material",
+            "size": size,
+            "material": material,
         }
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
+        print(f"ADDED! ID {id}")
 
     def update(self, id, name, quantity, price, size, material):
         new_product_obj = {
@@ -172,68 +208,11 @@ class ClothingProduct(Product):
             "quantity": quantity,
             "price": price,
             "type": "4",
-            size: "size",
-            material: "material",
+            "size": size,
+            "material": material,
         }
         self.delete(id)
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
-
-
-"""
-p1 = Product()
-p1.add("BOOK1", 25)  # name,  quantity
-
-pp2 = PerishableProduct()
-pp2.add("Milk", 30, "10 May 2026")  # expiry_date
-
-ep3 = ElectronicProduct()  #
-ep3.add("Samsung s26", 50, "2 Years")  # warranty
-
-
-cp4 = ClothingProduct()
-cp4.add("BluE ShIrt", 20, "M", "Silk")  #  size, material
-
-
-print("---")
-p1.view_all()
-print("---")
-pp2.view_all()
-print("---")
-ep3.view_all()
-print("---")
-cp4.view_all()
-print("---")
-
-"""
-
-"""
-p1 = Product()
-
-# pp2 = PerishableProduct()
-
-# ep3 = ElectronicProduct()
-
-cp4 = ClothingProduct()
-
-p1.view_all()
-print("---")
-
-# check id exists
-# cp4.update("PRD-0004","Navy Blue Shirt", 30, "M", "Pure Silk")
-cp4.view_all()
-print("---")
-
-
-# p1.delete("PRD-0004")
-
-p1.view_all()
-print("---")
-
-p1.search("bo")
-
-p1.add("Pen1", 3)
-
-p1.lowstock()
-"""
+        print(f"UPDATED! ID {id}")
