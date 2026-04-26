@@ -1,4 +1,4 @@
-# from NewProduct import Product, PerishableProduct, ElectronicProduct, ClothingProduct
+from NewProduct import Product, PerishableProduct, ElectronicProduct, ClothingProduct
 
 
 class ProductMenu:
@@ -39,15 +39,49 @@ class ProductMenu:
             self.action_choice_validate_fn, product_index, product_message
         )
 
+    def add_product_details(self, product_type):
+        if product_type == "1":
+            name = input("Name:")
+            quantity = input("Quantity: ")
+            price = input("Price: ")
+
+            p1 = Product()
+            p1.add(name, quantity, price)
+
+        elif product_type == "2":
+            name = input("Name:")
+            quantity = input("Quantity: ")
+            price = input("Price: ")
+            expiry_date = input("Expiry Date: ")
+
+            pp2 = PerishableProduct()
+            pp2.add(name, quantity, price, expiry_date)
+
+        elif product_type == "3":
+
+            name = input("Name:")
+            quantity = input("Quantity: ")
+            price = input("Price: ")
+            warranty = input("Warranty: ")
+
+            ep3 = ElectronicProduct()
+            ep3.add(name, quantity, price, warranty)
+
+        elif product_type == "4":
+            name = input("Name:")
+            quantity = input("Quantity: ")
+            price = input("Price: ")
+            size = input("Size: ")
+            material = input("Material: ")
+
+            ecp4 = ClothingProduct()
+            ecp4.add(name, quantity, price, size, material)
+
     def define_operation(self):
         if self.action_choice == "1":
             product_type_choice = self.prodoct_choice_fn()
-            print(product_type_choice)
+            self.add_product_details(product_type_choice)
 
-            # TASK
-            # 1 GET PRODUCT TYPE Completed
-            # 2 GET PRODUCT DETAILS
-            pass
         elif self.action_choice == "2":
             print("action selected 2 update")
         elif self.action_choice == "3":

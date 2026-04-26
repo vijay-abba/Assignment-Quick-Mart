@@ -24,18 +24,29 @@ class Product:
             f.write(str_product_list)
         self.read_from_file()
 
-    def add(self, name, quantity):
+    def add(self, name, quantity, price):
 
         id = f"PRD-{len(self.product_list)+1:04d}"
-        new_product_obj = {"id": id, "name": name, "quantity": quantity, "type": "1"}
+        new_product_obj = {
+            "id": id,
+            "name": name,
+            "quantity": quantity,
+            "price": price,
+            "type": "1",
+        }
 
         self.product_list.append(new_product_obj)
         self.writ_to_file()
 
-    def update(self, id, name, quantity):
-        
+    def update(self, id, name, quantity, price):
 
-        new_product_obj = {"id": id, "name": name, "quantity": quantity, "type": "1"}
+        new_product_obj = {
+            "id": id,
+            "name": name,
+            "quantity": quantity,
+            "price": price,
+            "type": "1",
+        }
         self.delete(id)
         self.product_list.append(new_product_obj)
         self.writ_to_file()
@@ -70,13 +81,14 @@ class PerishableProduct(Product):
     def __init__(self):
         super().__init__()
 
-    def add(self, name, quantity, expiry_date):
+    def add(self, name, quantity, price, expiry_date):
 
         id = f"PRD-{len(self.product_list)+1:04d}"
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "2",
             "expiry_date": expiry_date,
         }
@@ -84,13 +96,13 @@ class PerishableProduct(Product):
         self.product_list.append(new_product_obj)
         self.writ_to_file()
 
-    def update(self, id, name, quantity, expiry_date):
-        
+    def update(self, id, name, quantity, price, expiry_date):
 
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "2",
             "expiry_date": expiry_date,
         }
@@ -103,13 +115,14 @@ class ElectronicProduct(Product):
     def __init__(self):
         super().__init__()
 
-    def add(self, name, quantity, warranty):
+    def add(self, name, quantity, price, warranty):
 
         id = f"PRD-{len(self.product_list)+1:04d}"
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "3",
             "warranty": warranty,
         }
@@ -117,12 +130,13 @@ class ElectronicProduct(Product):
         self.product_list.append(new_product_obj)
         self.writ_to_file()
 
-    def update(self, id, name, quantity, warranty):
-        
+    def update(self, id, name, quantity, price, warranty):
+
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "3",
             "warranty": warranty,
         }
@@ -136,12 +150,13 @@ class ClothingProduct(Product):
     def __init__(self):
         super().__init__()
 
-    def add(self, name, quantity, size, material):
+    def add(self, name, quantity, price, size, material):
         id = f"PRD-{len(self.product_list)+1:04d}"
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "4",
             size: "size",
             material: "material",
@@ -150,11 +165,12 @@ class ClothingProduct(Product):
         self.product_list.append(new_product_obj)
         self.writ_to_file()
 
-    def update(self, id, name, quantity, size, material):
+    def update(self, id, name, quantity, price, size, material):
         new_product_obj = {
             "id": id,
             "name": name,
             "quantity": quantity,
+            "price": price,
             "type": "4",
             size: "size",
             material: "material",
@@ -192,19 +208,19 @@ print("---")
 
 """
 
-
+"""
 p1 = Product()
 
 # pp2 = PerishableProduct()
 
-# ep3 = ElectronicProduct()  
+# ep3 = ElectronicProduct()
 
 cp4 = ClothingProduct()
 
 p1.view_all()
 print("---")
 
-# check id exists 
+# check id exists
 # cp4.update("PRD-0004","Navy Blue Shirt", 30, "M", "Pure Silk")
 cp4.view_all()
 print("---")
@@ -220,8 +236,4 @@ p1.search("bo")
 p1.add("Pen1", 3)
 
 p1.lowstock()
-
-
-
-
-
+"""
